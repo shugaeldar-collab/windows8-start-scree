@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Windows 8 Start Screen</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: url('https://la.by/sites/default/files/news/windows-8.jpg') center/cover no-repeat fixed;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      color: #fff;
+      min-height: 100vh;
+      /* На десктопах скролл горизонтальный, на мобильных станет вертикальным через медиа-запросы */
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px 10px;
+      position: sticky;
+      left: 0;
+      background: transparent;
+      z-index: 10;
+    }
+
+    .header .start {
+      font-size: 28px;
+      font-weight: 300;
+      letter-spacing: 1px;
+    }
+
+    .header .user {
+      font-size: 18px;
+      font-weight: 300;
+      opacity: 0.9;
+    }
+
+    .start-screen {
+      display: flex;
+      gap: 40px;
+      padding: 20px 40px 40px;
+      width: max-content;
+      min-height: calc(100vh - 80px);
+      align-items: flex-start;
+    }
+
+    .group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .tiles {
+      display: grid;
+      gap: 8px;
+      grid-auto-flow: dense;
+    }
+
+    .tile {
+      background: #0078d7;
+      border-radius: 0;
+      cursor: pointer;
+      transition: transform 0.15s ease, filter 0.15s ease;
+      user-select: none;
+    }
+
+    .tile:hover {
+      transform: scale(1.03);
+      filter: brightness(1.15);
+      z-index: 1;
+    }
+
+    .tile:active {
+      transform: scale(0.97);
+    }
+
+    .tile.small {
+      width: 120px;
+      height: 120px;
+      grid-column: span 1;
+      grid-row: span 1;
+    }
+
+    .tile.wide {
+      width: 248px;
+      height: 120px;
+      grid-column: span 2;
+      grid-row: span 1;
+    }
+
+    .tile.large {
+      width: 248px;
+      height: 248px;
+      grid-column: span 2;
+      grid-row: span 2;
+    }
+
+    /* Цветовые классы плиток */
+    .pink    { background: #e91e63; }
+    .orange  { background: #ff5722; }
+    .yellow  { background: #ffc107; }
+    .green   { background: #4caf50; }
+    .teal    { background: #009688; }
+    .blue    { background: #2196f3; }
+
+    ::-webkit-scrollbar {
+      height: 12px;
+      width: 12px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #2d2d2d;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #5a5a5a;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #7a7a7a;
+    }
+
+    /* ==========================================================================
+       МОБИЛЬНАЯ АДАПТАЦИЯ (Для экранов меньше 768px)
+       ========================================================================== */
+    @media (max-width: 768px) {
+      body {
+        overflow-x: hidden; /* Отключаем горизонтальный скролл */
+        overflow-y: auto;   /* Включаем привычный вертикальный скролл */
+      }
+
+      .header {
+        padding: 20px 20px 10px;
+      }
+
+      .start-screen {
+        flex-direction: column; /* Группы плиток встают друг под друга */
+        width: 100%;            /* Контейнер больше не растягивается вширь */
+        padding: 10px 20px 20px;
+        gap: 30px;              /* Расстояние между вертикальными группами */
+      }
+
+      .group {
+        width: 100%;
+        align-items: center;    /* Центрируем группы на мобильном экране */
+      }
+
+      .tiles {
+        /* Принудительно перестраиваем все сетки под 2 колонки на мобильных */
+        grid-template-columns: repeat(2, 120px) !important; 
+      }
+      
+      /* Переопределяем синюю группу, у которой в инлайне стояла 1 колонка */
+      .group:last-child .tiles {
+        grid-template-columns: repeat(2, 120px) !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="start">Пуск</div>
+    <div class="user">User</div>
+  </header>
+
+  <div class="start-screen">
+    <!-- Группа 1: Розовые -->
+    <div class="group">
+      <div class="tiles" style="grid-template-columns: repeat(2, 120px);">
+        <div class="tile small pink"></div>
+        <div class="tile small pink"></div>
+        <div class="tile small pink"></div>
+        <div class="tile small pink"></div>
+        <div class="tile wide pink"></div>
+        <div class="tile small pink"></div>
+        <div class="tile small pink"></div>
+        <div class="tile small pink"></div>
+        <div class="tile small pink"></div>
+      </div>
+    </div>
+
+    <!-- Группа 2: Оранжевые -->
+    <div class="group">
+      <div class="tiles" style="grid-template-columns: repeat(4, 120px);">
+        <div class="tile small orange"></div>
+        <div class="tile small orange"></div>
+        <div class="tile small orange"></div>
+        <div class="tile small orange"></div>
+        <div class="tile small orange"></div>
+        <div class="tile small orange"></div>
+        <div class="tile small orange"></div>
+        <div class="tile small orange"></div>
+        <div class="tile wide orange"></div>
+        <div class="tile small orange"></div>
+        <div class="tile small orange"></div>
+        <div class="tile wide orange"></div>
+        <div class="tile small orange"></div>
+        <div class="tile small orange"></div>
+      </div>
+    </div>
+
+    <!-- Группа 3: Жёлтые -->
+    <div class="group">
+      <div class="tiles" style="grid-template-columns: repeat(2, 120px);">
+        <div class="tile small yellow"></div>
+        <div class="tile small yellow"></div>
+        <div class="tile small yellow"></div>
+        <div class="tile small yellow"></div>
+        <div class="tile small yellow"></div>
+        <div class="tile small yellow"></div>
+      </div>
+    </div>
+
+    <!-- Группа 4: Зелёные -->
+    <div class="group">
+      <div class="tiles" style="grid-template-columns: repeat(2, 120px);">
+        <div class="tile small green"></div>
+        <div class="tile small green"></div>
+        <div class="tile large green"></div>
+        <div class="tile small green"></div>
+        <div class="tile small green"></div>
+        <div class="tile small green"></div>
+        <div class="tile small green"></div>
+      </div>
+    </div>
+
+    <!-- Группа 5: Бирюзовые -->
+    <div class="group">
+      <div class="tiles" style="grid-template-columns: repeat(4, 120px);">
+        <div class="tile small teal"></div>
+        <div class="tile small teal"></div>
+        <div class="tile small teal"></div>
+        <div class="tile wide teal"></div>
+        <div class="tile small teal"></div>
+        <div class="tile small teal"></div>
+        <div class="tile small teal"></div>
+        <div class="tile small teal"></div>
+        <div class="tile small teal"></div>
+        <div class="tile small teal"></div>
+        <div class="tile large teal"></div>
+        <div class="tile small teal"></div>
+      </div>
+    </div>
+
+    <!-- Группа 6: Синие -->
+    <div class="group">
+      <div class="tiles" style="grid-template-columns: 120px;">
+        <div class="tile small blue"></div>
+        <div class="tile small blue"></div>
+        <div class="tile small blue"></div>
+        <div class="tile small blue"></div>
+        <div class="tile small blue"></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
